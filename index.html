@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Playing with various sources and layers</title>
+    <title>김천시 위생업소 종합본</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/css/ol.css"
     type="text/css">
   <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/build/ol.js"></script>
@@ -13,6 +13,7 @@
 </head>
      
 <body>
+    <h2>오픈 레이어스 지오서버 연동(김천)</h2>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.6.0/ol.js"></script> 
     <div class="row-fluid">
         <div class="col-sm-8">
@@ -21,10 +22,7 @@
         </div>
         <div class="col-sm-4">
             <div class="row">
-                <div class="span2">
-                    <div id="info_check" style="height:400px"><label>Layers</label></div>
-                    <div id="info_text" style="height:40px; width:200px" class="alert alert-success"></div>
-                </div>
+                <div id="info_check" style="height:400px; width:200px"><label>Layers</label></div>
             </div>
         </div>
     </div>
@@ -62,7 +60,7 @@
         url: 'http://localhost:8080/geoserver/opengis/wms',
         serverType:'geoserver',
         params:{
-            'LAYERS':"	opengis:geotown", 'TILED':true
+            'LAYERS':"opengis:geotown", 'TILED':true
         }})});
         vectorLayer2.set('name','읍면동');
 
@@ -72,9 +70,19 @@
         url: 'http://localhost:8080/geoserver/opengis/wms',
         serverType:'geoserver',
         params:{
-            'LAYERS':"				opengis:heatcome", 'TILED':true
+            'LAYERS':"opengis:heatcome", 'TILED':true
         }})});
         vectorLayer3.set('name','히트맵');
+    
+    var vectorLayer4 = new ol.layer.Tile({
+        source: new ol.source.TileWMS({
+        preload: Infinity,
+        url: 'http://localhost:8080/geoserver/opengis/wms',
+        serverType:'geoserver',
+        params:{
+            'LAYERS':"opengis:wert", 'TILED':true
+        }})});
+        vectorLayer4.set('name','김천시투명지도');    
      
     
          
@@ -83,7 +91,7 @@
                     center: [14259933, 4308236],
                     zoom: 10.5,
                     });
-    var layers = [ viewLayer, vectorLayer, vectorLayer2, vectorLayer3];
+    var layers = [ viewLayer, vectorLayer, vectorLayer2, vectorLayer3,vectorLayer4];
     var map = new ol.Map({target: 'map', layers: layers, view: view});
      
     //Styling for Countries layer. This could be put in a css file and linked to in the Head.
